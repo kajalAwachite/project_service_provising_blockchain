@@ -1,0 +1,84 @@
+import React,{useState} from 'react';
+//import web3 from '../../../web3.js'
+//import contract from '../../../contract.js'
+//import web3 from '../../../web3'
+import contract from '../../../contract'
+import web3 from '../../../web3'
+import ipfs from '../../../ipfs'
+function Page1(accAdd){
+
+const [serviceInfo, setServiceInfo] = useState({
+     serviceName:"",servicePrice:""})
+    const onChangeHandler = (e)=>{
+      const id = e.target.id;
+      const value = e.target.value;
+      setServiceInfo({
+        ...serviceInfo,
+        [id] : value
+      })
+      console.log(serviceInfo)
+    }
+   const onSubmit = async (event)=>{
+    event.preventDefault();
+    console.log("add service function called")
+      await web3.eth.getAccounts().then(async function (acc) {
+            console.log(acc[0]);
+      await contract.methods.createService(serviceInfo.serviceName,serviceInfo.servicePrice).send({from :acc[0],gas:300000}).then(function (err2, result) {
+
+                      //console.log(contract.methods.serviceCount().call())
+                        
+                    })
+                    
+            })
+        }
+
+       /* await contract.methods.createService(serviceInfo.serviceName,serviceInfo.servicePrice).send({
+          from:acc[0],gas:300000}).Then(function (err2, result) {
+                        if (err2)
+                        {
+                            alert("Uset Already exist");
+                        }
+                        else
+                        {
+                            alert("new Client Address");
+                        }
+                    }
+    }*/
+    
+  
+
+    return (
+    <div className='Page1'>
+        <form onSubmit={onSubmit}>
+ 
+          <div className="form-group mr-sm-2">
+            <input
+              id="serviceName"
+              type="text"
+              value={serviceInfo.serviceName}
+             // ref={(input)=>{this.serviceName = input}}
+              className="form-control"
+              placeholder="Product Name"
+                onChange={onChangeHandler}
+              required />
+           </div>
+          <div className="form-group mr-sm-2">
+            <input
+              id="servicePrice"
+              type="number"
+              value={serviceInfo.servicePrice}
+              className="form-control"
+              placeholder="Product Price"
+                onChange={onChangeHandler}
+              required />
+          </div>
+          <button type="submit" className="btn btn-primary">Add Product</button>
+        </form>
+    </div>
+  );
+
+ }
+  
+
+
+export default Page1;
