@@ -1,3 +1,4 @@
-# project_service_provising_blockchain
-# project_service_provising_blockchain
-# project_service_provising_blockchain
+  To run project
+  open cmd
+  run npm start
+  
