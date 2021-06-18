@@ -6,8 +6,10 @@ import Page1 from './Page1';
 import Page2 from './Page2';
 import Page3 from './Page3';
 import Web3 from 'web3'
+import a from './a'
 import Mycontract from '../../../abis/Mycontract.json'
-
+import { Card } from 'react-bootstrap';
+import welcome1 from '../../Images/welcome2.png';
 class Client_Home extends   Component {
    async componentWillMount()
   {
@@ -48,7 +50,7 @@ class Client_Home extends   Component {
        console.log(mycontract)
        this.setState({mycontract})
        const serviceCount=await mycontract.methods.serviceCount().call()
-       console.log(serviceCount.toString())
+       console.log({serviceCount})
        for(var i =1;i<=serviceCount;i++)
        {      
         const service = await mycontract.methods.services(i).call()
@@ -96,27 +98,20 @@ class Client_Home extends   Component {
   {
 
     return (
-    <div>
-  
-      <Router>
+
+  <div>
+
+   <Router>
         <Navbar />
-      
         <Switch>
-          <Route path='/ClientDashboard' exact component={Client_Home} />
-         // <Route path='/page1' component={() => <Page1 createService={this.createService} />}/>
-          <Route
-  path='/page1'
-  render={(props) => (
-    <Page1 {...props} services={this.state.services} />
-  )}
-/>
+          <Route exact path='/Client_Home' component={Page3} />
+           <Route path='/page1' component={Page1} />
           <Route path='/page2' component={Page2} />
-          <Route path='/page3' component={Page3} />
+          <Route path='/page3' component={a} />
         </Switch>
       
       </Router>
-    </div>
-
+</div>
   );
 
   }

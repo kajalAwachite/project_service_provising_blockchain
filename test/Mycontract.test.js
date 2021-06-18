@@ -18,6 +18,8 @@ contract('Mycontract',([deployer,sp,client])=>{
 			assert.notEqual(address,'')
 			assert.notEqual(address,null)
 			assert.notEqual(address,undefined)
+			assert.notEqual(address,'')
+			assert.notEqual(address,'')
 			
 		
 		})
@@ -33,7 +35,7 @@ contract('Mycontract',([deployer,sp,client])=>{
 		let result,serviceCount
 
 		before(async() =>{
-		result = await mycontract.createService('internet',web3.utils.toWei('1','Ether'),{from:sp})
+		result = await mycontract.createService('internet',web3.utils.toWei('1','Ether'),'123','this is information',{from:sp})
 		serviceCount=await mycontract.serviceCount()
 	})
 		it('create service',async() =>{
@@ -45,6 +47,8 @@ contract('Mycontract',([deployer,sp,client])=>{
 			assert.equal(event.price,'1000000000000000000','price is correct')
 			assert.equal(event.owner,sp,'owner is correct')
 			assert.equal(event.purchased,false,'is correct')
+			assert.equal(event.serviceCode,'123','is correct')
+			assert.equal(event.info,'this is information','is correct')
 		})
 
 
@@ -58,6 +62,8 @@ contract('Mycontract',([deployer,sp,client])=>{
 			assert.equal(service.price,'1000000000000000000','price is correct')
 			assert.equal(service.owner,sp,'owner is correct')
 			assert.equal(service.purchased,false,'is correct')
+			assert.equal(service.serviceCode,'123','is correct')
+			assert.equal(service.info,'this is information','is correct')
 	
 
 
@@ -82,6 +88,8 @@ contract('Mycontract',([deployer,sp,client])=>{
 			assert.equal(event.price,'1000000000000000000','price is correct')
 			assert.equal(event.owner,client,'owner is correct')
 			assert.equal(event.purchased,true,'is correct')
+			assert.equal(event.serviceCode,123,'is correct')
+			assert.equal(event.info,'this is information','is correct')
 
 
 			//service provider receive payment

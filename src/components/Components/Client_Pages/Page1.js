@@ -101,7 +101,7 @@ class Page1 extends   Component {
 
     return (
     <div>
-    	<h2>Buy Product</h2>
+    	<h2>Buy Services</h2>
         <table className="table">
           <thead>
             <tr>
@@ -109,7 +109,9 @@ class Page1 extends   Component {
               <th scope="col">Name</th>
               <th scope="col">Price</th>
               <th scope="col">Owner</th>
+              <th scope="col">Service Information</th>
               <th scope="col"></th>
+
             </tr>
           </thead>
           <tbody id="productList">
@@ -118,8 +120,9 @@ class Page1 extends   Component {
           		<tr key={key}>
               <th scope="row">{service.id.toString()}</th>
               <td>{service.name}</td>
-              <td>{window.web3.utils.fromWei(service.price.toString(),'Ether')}</td>
+              <td>{window.web3.utils.fromWei(service.price.toString(),'Ether')}Eth</td>
               <td>{service.owner}</td>
+              <td>{service.info}</td>
               <td>
               {!service.purchased
               	?<button className="buyButton" 
@@ -133,7 +136,7 @@ class Page1 extends   Component {
 		                }}>
 		              Buy
 		              </button>
-		              :null
+		              :<p style={{ color: 'red' }}>Service Already purchased</p>
 		             }
               </td>
             </tr>

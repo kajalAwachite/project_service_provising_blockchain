@@ -18,7 +18,7 @@ class Main extends Component{
   <img class="card-img-top" src={man} alt="Card image cap"  height="390px" width="250px"/>
   <div class="card-body">
     <h5 class="card-title">Service Provider</h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+   
                             <a href="/Sp_Home" class="btn btn-primary float-right">Login</a>
                             <a href="/Login" class="btn btn-primary">Registration</a>
   </div>
@@ -29,7 +29,6 @@ class Main extends Component{
   <img class="card-img-top" src={woman} alt="Card image cap" height="390px" width="250px"/>
   <div class="card-body">
     <h5 class="card-title">Client</h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
     <a href="/Client_Home" class="btn btn-primary float-right">Login</a>
                             <a href="/Login1" class="btn btn-primary">Registration</a>
   </div>

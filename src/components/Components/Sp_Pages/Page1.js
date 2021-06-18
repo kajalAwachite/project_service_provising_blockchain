@@ -42,7 +42,7 @@ class Page1 extends   Component {
        console.log(mycontract)
        this.setState({mycontract})
        const serviceCount=await mycontract.methods.serviceCount().call()
-       console.log(serviceCount.toString())
+       console.log({serviceCount})
        for(var i =1;i<=serviceCount;i++)
        {      
         const service = await mycontract.methods.services(i).call()
@@ -71,7 +71,10 @@ class Page1 extends   Component {
           account:'',
           serviceName:'',
           servicePrice:0,
+          serviceCode:'',
+          serviceInfo:'',
           services:[],
+          message:'',
           loading:true
         }
 
@@ -88,10 +91,27 @@ class Page1 extends   Component {
     this.setState({servicePrice: event.target.value});
      //console.log({servicePrice})
   }
-    createService(name,price)
+
+
+     serviceCodeHandler = (event) => {
+    this.setState({serviceCode: event.target.value});
+     //console.log({servicePrice})
+  }
+
+ serviceinfoHandler = (event) => {
+    this.setState({serviceInfo: event.target.value});
+     //console.log({servicePrice})
+  }
+
+  handleConfirmServiceCode = event => {
+  if (event.handleConfirmServiceCode !== event.serviceCodeHandler) {
+    this.setState({message:"service code dors not match"});
+  }
+};
+    createService(name,price,serviceCode,serviceInfo)
     {
       this.setState({loading:true})
-      this.state.mycontract.methods.createService(name,price).send({from:this.state.account})
+      this.state.mycontract.methods.createService(name,price,serviceCode,serviceInfo).send({from:this.state.account})
       .once('receipt',(receipt)=>{
         this.setState({loading:false})
       })
@@ -112,14 +132,19 @@ class Page1 extends   Component {
 
     return (
     <div>
-       <h1>Add Product</h1>
+       <h1>Add Service to Blockchain</h1>
         <form onSubmit={(event) => {
           event.preventDefault()
           const name=this.state.serviceName
+          const serviceCode=this.state.serviceCode
+          const serviceInfo=this.state.serviceInfo
           const price = window.web3.utils.toWei(this.state.servicePrice.toString(), 'Ether')
-          console.log(price)
+           console.log(price)
           console.log(name)
-          this.createService(name, price)
+          console.log(serviceCode)
+          console.log(serviceInfo)
+          
+          this.createService(name,price,serviceCode,serviceInfo)
           
         }}>
           <div className="form-group mr-sm-2">
@@ -128,18 +153,49 @@ class Page1 extends   Component {
               type="text"
               ref={(input) => { this.serviceName = input }}
               className="form-control"
-              placeholder="Product Name"
+              placeholder="Enter Service Name"
               onChange={this.serviceNameHandler}
               required />
           </div>
           <div className="form-group mr-sm-2">
             <input
               id="servicePrice"
-              type="text"
+              type="number"
               ref={(input) => {this.servicePrice = input }}
                 onChange={this.servicePriceHandler}
               className="form-control"
-              placeholder="Product Price"
+              placeholder=" Enter service Price"
+              required />
+          </div>
+          <div className="form-group mr-sm-2">
+            <input
+              id="serviceCode"
+              type="password"
+              ref={(input) => {this.serviceCode = input }}
+                onChange={this.serviceCodeHandler}
+              className="form-control"
+              placeholder="Enter Service Code"
+              required />
+          </div>
+           <div className="text-danger">{this.state.message}</div>
+          <div className="form-group mr-sm-2">
+            <input
+              id="serviceCodeConfirm"
+              type="password"
+              ref={(input) => {this.serviceCode = input }}
+              onChange={this.handleConfirmServiceCode}
+              className="form-control"
+              placeholder="Enter Service Code Again"
+              required />
+          </div>
+           <div className="form-group mr-sm-2">
+            <input
+              id="serviceInfo"
+              type="text"
+              ref={(input) => {this.serviceInfo = input }}
+                onChange={this.serviceinfoHandler}
+              className="form-control"
+              placeholder="Enter Service information"
               required />
           </div>
           <button type="submit" className="btn btn-primary">Add Product</button>
